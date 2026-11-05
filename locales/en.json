@@ -1,0 +1,91 @@
+{
+  "Navbar": {
+    "title": "Sri Varaha Venkatadri Devasthanam",
+    "home": "Home",
+    "about": "About",
+    "sevas": "Seva Registration",
+    "donate": "Donate",
+    "festivals": "Festivals",
+    "gallery": "Gallery",
+    "history": "History",
+    "contact": "Contact",
+    "onlineBooking": "Online Booking",
+    "signIn": "Sign In",
+    "logout": "Logout",
+    "donations": "Donations"
+  },
+  "Home": {
+    "welcome": "Welcome to Sri Varaha Venkatadri Devasthanam",
+    "subtitle": "Experience the divine presence and seek blessings for peace and prosperity.",
+    "donateNow": "Donate Now",
+    "bookSeva": "Book a Seva",
+    "aboutTitle": "About the Temple",
+    "aboutP1": "Sri Varaha Venkatadri Devasthanam is a landmark of spiritual significance, drawing devotees from all over the world. Our mission is to promote the timeless values of devotion, service, and peace.",
+    "aboutP2": "We host regular poojas, sevas, and large-scale festivals that provide a deeply enriching experience for all devotees.",
+    "readMore": "Read More",
+    "darshanTimings": "Daily Darshan Timings",
+    "morningDarshan": "Morning Darshan",
+    "afternoonDarshan": "Afternoon Darshan",
+    "eveningDarshan": "Evening Darshan",
+    "totalDonors": "Total Donors",
+    "dailySevas": "Daily Sevas",
+    "annualFestivals": "Annual Festivals",
+    "upcomingEvents": "Upcoming Events & Festivals",
+    "viewDetails": "View Details",
+    "ourHistory": "Our History",
+    "historyIntro": "Sri Varaha Venkatadri Devasthanam is a renowned pilgrimage site...",
+    "historyMain": "he temple is known for its traditional South Indian architecture, with a beautifully adorned entrance and a majestic gopuram...",
+    "viewFullHistory": "View Full History",
+    "templeGallery": "Temple Gallery",
+    "gallerySubtext": "Glimpses of our sacred spaces and ceremonies",
+    "viewFullGallery": "View Full Gallery"
+  },
+  "HistoryPage": {
+    "heroTitle": "Our Divine History",
+    "heroSub": "A legacy of devotion, peace, and spiritual awakening dating back centuries.",
+    "originsTitle": "The Divine Origins at Bowluvada",
+    "originsP1": "Nestled in the serene and spiritually vibrant village of Bowluvada, the Sri Varaha Venkatadri Devasthanam stands as a beacon of devotion and peace. According to local lore, the divine presence of Lord Varaha and Lord Venkateswara has graced these sacred lands for generations, blessing the village with prosperity and spiritual harmony.",
+    "originsP2": "The temple's origins are deeply rooted in the unwavering faith of the Bowluvada community. Early devotees recognized the spiritual aura of the location, where the gentle breeze and natural beauty seemed to resonate with divine energy, leading to the consecration of the first shrine.",
+    "modernTitle": "A Flourishing Spiritual Center",
+    "modernP1": "Over the years, the Sri Varaha Venkatadri Devasthanam has blossomed from a humble village shrine into a magnificent spiritual center. The recent renovations have added grand architectural elements, including intricate stone carvings and a beautiful sanctum, reflecting the profound devotion of the community.",
+    "modernP2": "Today, the temple not only serves as a place of daily worship but also hosts grand annual festivals that draw devotees from surrounding regions. It remains a guiding light in Bowluvada, fostering a deep sense of unity, cultural heritage, and eternal devotion to Lord Balaji."
+  },
+  "SevasList": {
+    "title": "Online Seva Booking",
+    "subtitle": "Book poojas and sevas online. Participate in the divine rituals from anywhere in the world.",
+    "noneAvailable": "No sevas currently available.",
+    "imageAlt": "Image",
+    "defaultDescription": "Join us in this sacred seva to receive divine blessings.",
+    "bookNow": "Book Now"
+  },
+  "Sevas": {
+    "bookSeva": "Book Seva",
+    "selectDate": "Select Date",
+    "selectSlot": "Select Time Slot",
+    "proceedPayment": "Proceed to Payment"
+  },
+  "Donations": {
+    "supportTemple": "Support the Temple",
+    "supportDesc": "Your generous contributions help us maintain the temple, perform daily rituals, and continue our charitable activities like Annadanam and Goshala maintenance.",
+    "makeDonation": "Make a Donation",
+    "recentDonors": "Our Recent Donors",
+    "donorsDesc": "We express our heartfelt gratitude to all devotees for their continuous support and divine contributions.",
+    "noDonations": "No public donations found yet.",
+    "divineContribution": "Divine Contribution",
+    "fullName": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "donationType": "Donation Type / Purpose",
+    "panOptional": "PAN Number (Optional)",
+    "amount": "Amount (₹)",
+    "cancel": "Cancel",
+    "proceedPay": "Proceed to Pay",
+    "types": {
+      "general": "General Donation",
+      "annadanam": "Annadanam (Free Meals)",
+      "development": "Temple Development",
+      "goshala": "Goshala (Cow Shelter)",
+      "festival": "Festival Donation"
+    }
+  }
+}

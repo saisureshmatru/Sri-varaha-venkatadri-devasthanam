@@ -1,6 +1,23 @@
+@font-face {
+  font-family: 'Potti Sriramulu Local';
+  src: url('/Potti-Sreeramulu-Regular.woff') format('woff'),
+       url('/Potti Sreeramulu Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
+  --font-potti: 'Potti Sriramulu Local', sans-serif;
   --background: #ffffff;
   --foreground: #171717;
+}
+
+html[lang="te"], html[lang="te"] body, html[lang="te"] * {
+  font-family: var(--font-potti) !important;
+  font-weight: 400 !important;
+  word-spacing: 0.15em !important;
+  line-height: 1.8 !important;
 }
 
 @media (prefers-color-scheme: dark) {
