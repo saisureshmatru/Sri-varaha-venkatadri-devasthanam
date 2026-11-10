@@ -1,12 +1,23 @@
 import { Pool } from 'pg';
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT || 5432,
-});
+const connectionString = process.env.DATABASE_URL;
+
+const pool = new Pool(
+  connectionString
+    ? {
+        connectionString,
+        ssl: {
+          rejectUnauthorized: false, // Required for Neon cloud databases
+        },
+      }
+    : {
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT || 5432,
+      }
+);
 
 export const query = async (text, params) => {
   const start = Date.now();
@@ -40,3 +51,5 @@ export const getClient = async () => {
   };
   return client;
 };
+
+export default pool;

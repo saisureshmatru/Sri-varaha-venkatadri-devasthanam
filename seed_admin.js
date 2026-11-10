@@ -3,13 +3,24 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 async function seedAdmin() {
-  const client = new Client({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT || 5432,
-  });
+  const connectionString = process.env.DATABASE_URL;
+
+  const client = new Client(
+    connectionString
+      ? {
+          connectionString,
+          ssl: {
+            rejectUnauthorized: false, // Required for Neon cloud databases
+          },
+        }
+      : {
+          user: process.env.DB_USER,
+          host: process.env.DB_HOST,
+          database: process.env.DB_NAME,
+          password: process.env.DB_PASSWORD,
+          port: process.env.DB_PORT || 5432,
+        }
+  );
 
   try {
     await client.connect();
@@ -28,7 +39,7 @@ async function seedAdmin() {
     const res = await client.query(`
       INSERT INTO users (name, email, password_hash, role)
       VALUES ($1, $2, $3, $4)
-      ON CONFLICT (email) 
+      ON CONFLICT (email)
       DO UPDATE SET password_hash = EXCLUDED.password_hash, role = EXCLUDED.role
       RETURNING id, email, role;
     `, [name, email, passwordHash, role]);

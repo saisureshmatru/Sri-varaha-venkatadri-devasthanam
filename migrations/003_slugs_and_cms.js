@@ -1,13 +1,24 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT || 5432,
-});
+const connectionString = process.env.DATABASE_URL;
+
+const pool = new Pool(
+  connectionString
+    ? {
+        connectionString,
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      }
+    : {
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT || 5432,
+      }
+);
 
 async function up() {
   const client = await pool.connect();
@@ -16,7 +27,7 @@ async function up() {
 
     // 1. Add slug to sevas
     await client.query(`
-      ALTER TABLE sevas 
+      ALTER TABLE sevas
       ADD COLUMN IF NOT EXISTS slug VARCHAR(255) UNIQUE;
     `);
 
@@ -27,14 +38,14 @@ async function up() {
 
     // 2. Add is_public to cms_pages
     await client.query(`
-      ALTER TABLE cms_pages 
+      ALTER TABLE cms_pages
       ADD COLUMN IF NOT EXISTS is_public BOOLEAN DEFAULT TRUE;
     `);
 
     // Insert some default CMS pages if not exists
     await client.query(`
-      INSERT INTO cms_pages (slug, title, content, is_public) 
-      VALUES 
+      INSERT INTO cms_pages (slug, title, content, is_public)
+      VALUES
       ('about', 'About the Temple', 'Welcome to the Sri Venkateswara Swamy Temple...', TRUE),
       ('contact', 'Contact Us', 'Reach out to us at info@temple.org', TRUE)
       ON CONFLICT (slug) DO NOTHING;
