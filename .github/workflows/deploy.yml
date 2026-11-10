@@ -2,13 +2,15 @@ name: Deploy to Private VM
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions UI
 
 jobs:
-    deploy:
-      runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-      steps:
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -39,10 +41,11 @@ jobs:
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /root/Sri-varaha-venkatadri-devasthanam
             
-            # Pull latest changes from private repository
+            # Pull latest changes from your private repository
             git pull origin main
             
-            # Install dependencies and restart your service (e.g., PM2, Docker Compose)
+            # Install dependencies and restart your service
+            # (Adjust these commands based on your stack, e.g., npm, Docker, or PM2)
             npm install --production
             pm2 restart all || pm2 start app.js --name "my-app"
           EOF
