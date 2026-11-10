@@ -2,7 +2,7 @@
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
-  allowedDevOrigins: ['192.168.0.217'],
+  allowedDevOrigins: ['https://sri-varaha-venkatadri-devasthanam.vercel.app'],
 };
 
 export default nextConfig;
