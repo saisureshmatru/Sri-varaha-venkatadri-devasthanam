@@ -1,14 +1,15 @@
 'use client';
 
-import { 
-  Box, Typography, Card, CardContent, Button, Switch, 
-  Dialog, DialogTitle, DialogContent, DialogActions, TextField, Grid, IconButton, TablePagination, Chip 
+import {
+  Box, Typography, Card, CardContent, Button, Switch,
+  Dialog, DialogTitle, DialogContent, DialogActions, TextField, Grid, IconButton, TablePagination, Chip
 } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RestoreIcon from '@mui/icons-material/Restore';
+import SpaIcon from '@mui/icons-material/Spa';
 
 export default function AdminSevasList({ initialSevas }) {
   const [sevas, setSevas] = useState(initialSevas || []);
@@ -79,19 +80,6 @@ export default function AdminSevasList({ initialSevas }) {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!confirm('Are you sure you want to delete this seva?')) return;
-    try {
-      const res = await fetch(`/api/admin/sevas/${id}`, { method: 'DELETE' });
-      if (res.ok) {
-        setSevas(sevas.filter(s => s.id !== id));
-        router.refresh();
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   const handleToggle = async (id, currentStatus) => {
     if (currentStatus && !confirm('Are you sure you want to deactivate this seva?')) return;
     try {
@@ -124,19 +112,19 @@ export default function AdminSevasList({ initialSevas }) {
         <Typography variant="h6" fontWeight="bold" sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}>Seva & Slot Management</Typography>
         <Button variant="contained" color="primary" onClick={() => handleOpen()} sx={{ color: 'white', minWidth: { xs: '40px', sm: 'auto' }, px: { xs: 1, sm: 2 } }}>
           <Typography sx={{ display: { xs: 'inline', sm: 'none' }, fontSize: '1.2rem', lineHeight: 1 }}>+</Typography>
-          <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>+ Add New Seva</Button>
+          <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>+ Add New Seva</Box>
         </Button>
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+        <Grid container spacing={3}>
           {sevas.map((seva) => (
-            <Box key={seva.id} sx={{ width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(33.333% - 16px)' } }}>
-              <Card sx={{ 
+            <Grid item xs={12} sm={6} md={4} key={seva.id}>
+              <Card sx={{
                 width: '100%',
-                position: 'relative', 
-                height: '100%', 
-                display: 'flex', 
+                position: 'relative',
+                height: '100%',
+                display: 'flex',
                 flexDirection: 'column',
                 opacity: seva.is_public ? 1 : 0.6,
                 transition: 'opacity 0.3s'
@@ -145,18 +133,18 @@ export default function AdminSevasList({ initialSevas }) {
                   <SpaIcon sx={{ fontSize: 48, color: seva.is_public ? 'primary.main' : 'text.secondary' }} />
                 </Box>
                 <Box sx={{ position: 'absolute', top: 12, right: 12, display: 'flex', gap: 1 }}>
-                  <IconButton 
-                    color="primary" 
+                  <IconButton
+                    color="primary"
                     size="small"
                     onClick={() => handleOpen(seva)}
                     sx={{ bgcolor: 'rgba(255,255,255,0.9)', '&:hover': { bgcolor: 'white' }, boxShadow: 1 }}
                   >
                     <EditIcon fontSize="small" />
                   </IconButton>
-                  <IconButton 
-                    color={seva.is_public ? "error" : "success"} 
+                  <IconButton
+                    color={seva.is_public ? "error" : "success"}
                     size="small"
-                    onClick={() => handleSoftDelete(seva.id, seva.is_public)}
+                    onClick={() => handleToggle(seva.id, seva.is_public)}
                     sx={{ bgcolor: 'rgba(255,255,255,0.9)', '&:hover': { bgcolor: 'white' }, boxShadow: 1 }}
                   >
                     {seva.is_public ? <DeleteIcon fontSize="small" /> : <RestoreIcon fontSize="small" />}
@@ -173,11 +161,11 @@ export default function AdminSevasList({ initialSevas }) {
                     <Typography variant="h6" color="primary.main" fontWeight="bold">
                       ₹{seva.amount}
                     </Typography>
-                    <Chip 
-                      label={seva.is_public ? "Active" : "Inactive"} 
-                      size="small" 
-                      color={seva.is_public ? "success" : "default"} 
-                      sx={{ fontWeight: 'bold' }} 
+                    <Chip
+                      label={seva.is_public ? "Active" : "Inactive"}
+                      size="small"
+                      color={seva.is_public ? "success" : "default"}
+                      sx={{ fontWeight: 'bold' }}
                     />
                   </Box>
                   <Typography variant="caption" color="text.secondary" noWrap sx={{ display: 'block' }}>
@@ -185,29 +173,28 @@ export default function AdminSevasList({ initialSevas }) {
                   </Typography>
                 </CardContent>
               </Card>
-            </Box>
+            </Grid>
           ))}
           {sevas.length === 0 && (
-            <Box sx={{ width: '100%' }}>
+            <Grid item xs={12}>
               <Typography color="text.secondary" align="center" sx={{ py: 4 }}>No sevas found.</Typography>
-            </Box>
+            </Grid>
           )}
-        </Box>
+        </Grid>
       </Box>
 
       {total > 0 && (
-          <TablePagination
-            component="div"
-            count={total}
-            page={page}
-            onPageChange={(e, newPage) => setPage(newPage)}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={(e) => { setRowsPerPage(parseInt(e.target.value, 10)); setPage(0); }}
-            rowsPerPageOptions={[10, 25, 50]}
-            sx={{ mt: 2 }}
-          />
-        )}
-      </Box>
+        <TablePagination
+          component="div"
+          count={total}
+          page={page}
+          onPageChange={(e, newPage) => setPage(newPage)}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={(e) => { setRowsPerPage(parseInt(e.target.value, 10)); setPage(0); }}
+          rowsPerPageOptions={[10, 25, 50]}
+          sx={{ mt: 2 }}
+        />
+      )}
 
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>{editingSeva ? 'Edit Seva' : 'Add New Seva'}</DialogTitle>

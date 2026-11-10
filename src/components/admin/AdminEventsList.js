@@ -1,6 +1,6 @@
 'use client';
 
-import { 
+import {
   Box, Typography, Card, CardContent, Button, CardMedia,
   Dialog, DialogTitle, DialogContent, DialogActions, TextField, Grid, IconButton, MenuItem, Select, FormControl, InputLabel, TablePagination, Chip
 } from '@mui/material';
@@ -40,9 +40,9 @@ export default function AdminEventsList({ initialEvents }) {
     if (evt) {
       setEditingEvent(evt.id);
       setFormData({
-        title: evt.title || '', title_te: evt.title_te || '', 
+        title: evt.title || '', title_te: evt.title_te || '',
         description: evt.description || '', description_te: evt.description_te || '',
-        event_date: evt.event_date ? new Date(evt.event_date).toISOString().slice(0, 16) : '', 
+        event_date: evt.event_date ? new Date(evt.event_date).toISOString().slice(0, 16) : '',
         type: evt.type || 'EVENT', image_url: evt.image_url || ''
       });
     } else {
@@ -117,14 +117,14 @@ export default function AdminEventsList({ initialEvents }) {
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+        <Grid container spacing={3}>
           {events.map((evt) => (
-            <Box key={evt.id} sx={{ width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(33.333% - 16px)' } }}>
-              <Card sx={{ 
+            <Grid item xs={12} sm={6} md={4} key={evt.id}>
+              <Card sx={{
                 width: '100%',
-                position: 'relative', 
-                height: '100%', 
-                display: 'flex', 
+                position: 'relative',
+                height: '100%',
+                display: 'flex',
                 flexDirection: 'column',
                 opacity: evt.is_active ? 1 : 0.6,
                 transition: 'opacity 0.3s'
@@ -137,16 +137,16 @@ export default function AdminEventsList({ initialEvents }) {
                   sx={{ filter: evt.is_active ? 'none' : 'grayscale(100%)', objectFit: 'cover' }}
                 />
                 <Box sx={{ position: 'absolute', top: 12, right: 12, display: 'flex', gap: 1 }}>
-                  <IconButton 
-                    color="primary" 
+                  <IconButton
+                    color="primary"
                     size="small"
                     onClick={() => handleOpen(evt)}
                     sx={{ bgcolor: 'rgba(255,255,255,0.9)', '&:hover': { bgcolor: 'white' }, boxShadow: 1 }}
                   >
                     <EditIcon fontSize="small" />
                   </IconButton>
-                  <IconButton 
-                    color={evt.is_active ? "error" : "success"} 
+                  <IconButton
+                    color={evt.is_active ? "error" : "success"}
                     size="small"
                     onClick={() => handleToggle(evt.id, evt.is_active)}
                     sx={{ bgcolor: 'rgba(255,255,255,0.9)', '&:hover': { bgcolor: 'white' }, boxShadow: 1 }}
@@ -167,10 +167,9 @@ export default function AdminEventsList({ initialEvents }) {
                   <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2 }} noWrap>
                     {evt.title_te}
                   </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      ID: {evt.id}
-                    </Typography>
-                  </Box>
+                  <Typography variant="caption" color="text.secondary">
+                    ID: {evt.id}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
