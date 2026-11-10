@@ -37,7 +37,7 @@ jobs:
       - name: Run Remote Deployment Script
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-            cd /path/to/your/app
+            cd /root/Sri-varaha-venkatadri-devasthanam
             
             # Pull latest changes from private repository
             git pull origin main
