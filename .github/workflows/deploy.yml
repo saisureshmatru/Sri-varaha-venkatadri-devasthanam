@@ -1,0 +1,48 @@
+name: Deploy to Private VM
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+    deploy:
+      runs-on: ubuntu-latest
+
+      steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH Key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+
+      - name: Add Server to Known Hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Generate .env file on Runner
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: Securely Copy .env and Code to VM
+        run: |
+          # Ensure target directory exists on server
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p /path/to/your/app"
+          
+          # Copy the generated .env file to your app directory
+          scp .env ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/path/to/your/app/.env
+
+      - name: Run Remote Deployment Script
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            cd /path/to/your/app
+            
+            # Pull latest changes from private repository
+            git pull origin main
+            
+            # Install dependencies and restart your service (e.g., PM2, Docker Compose)
+            npm install --production
+            pm2 restart all || pm2 start app.js --name "my-app"
+          EOF
